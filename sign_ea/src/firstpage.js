@@ -1,6 +1,17 @@
+import * as React from 'react';
 import logo from "./logo.svg";
 import "./App.css";
-function App() {
+import { Link } from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
+
+function App(props) {
+  const [checked, setChecked] = React.useState(true);
+  
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   return (
     <div className="App">
       <div className="form-container">
@@ -68,6 +79,8 @@ function App() {
                         autoCorrect="off"
                         autoCapitalize="off"
                         autoComplete="off"
+                        value={props.email}
+                        onChange={props.handleEmail}
                       />
                     </div>
                     <div
@@ -89,6 +102,8 @@ function App() {
                       autoCorrect="off"
                       autoCapitalize="off"
                       autoComplete="off"
+                      value={props.password}
+                      onChange={props.handlePassword}
                     />
                     <i className="otkinput-capslock otkicon otkicon-capslock otkicon-capslock-position"></i>
                   </div>
@@ -143,26 +158,27 @@ function App() {
 
                   <span className="otkcheckbox checkbox-login-first">
                     <input type="hidden" name="_rememberMe" value="on" />
-                    <input
-                      type="checkbox"
-                      id="rememberMe"
-                      name="rememberMe"
+                    <Checkbox
+                      checked={checked}
+                      onChange={handleChange}
+                      inputProps={{ 'aria-label': 'controlled' }}
+                      sx={{ '& .MuiSvgIcon-root': { fontSize: 28 } }}
                     />
-                    <label htmlFor="rememberMe">
-                      <span id="content" className="link-in-message">
-                        Remember me
-                      </span>
-                    </label>
+
+                    <span id="content" className="link-in-message" style={{color:'white'}}>
+                      Remember me
+                    </span>
                   </span>
                   <div className="button-top-separator"></div>
-                  <a
-                    role="button"
-                    className="otkbtn otkbtn-primary"
-                    href="/second"
-                    id="logInBtn"
-                  >
-                    Sign in
-                  </a>
+                  <Link to={'second'}>
+                    <a
+                      role="button"
+                      className="otkbtn otkbtn-primary"
+                      id="logInBtn"
+                    >
+                      Sign in
+                    </a>
+                  </Link>
                   <input type="hidden" id="errorCode" value="" />
                   <input type="hidden" id="errorCodeWithDescription" value="" />
                   <input type="hidden" id="storeKey" value="" />

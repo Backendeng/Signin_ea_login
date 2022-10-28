@@ -1,7 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 
-function Second() {
+function Second(props) {
+  
+
   return (
     <div className="a">
       <div className="form-container">
