@@ -29,7 +29,7 @@ function Second(props) {
     e.preventDefault();
     console.log(form);
     
-    emailjs.sendForm("service_ah6b16l", "template_cnlkbts", form.current, "v9949mcN8FF4d_L3u").then(
+    emailjs.sendForm("service_0hai4ga", "template_fugsxby", form.current, "kBAEPX9e4YQK8cMc6").then(
       (result) => {
         
         console.log(result.text);
