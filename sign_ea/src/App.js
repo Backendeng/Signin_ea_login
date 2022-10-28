@@ -13,7 +13,6 @@ function App() {
 
   const handleEmail = (event) => {
     setEmail(event.target.value);
-    console.log(email);
   };
 
   const handlePassword = (event) => {
