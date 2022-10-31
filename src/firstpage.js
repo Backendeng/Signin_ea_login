@@ -2,46 +2,34 @@ import * as React from 'react';
 import logo from "./logo.svg";
 import "./App.css";
 import { Link } from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 
 function App(props) {
   const [checked, setChecked] = React.useState(true);
-  
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
+  const handleSignin = () => {
+    console.log(props.emailcss);
+    console.log(props.passwordcss);
+    if (props.email != '' && props.password != '') {
+      navigate('/second', {replace: true});
+    } else if (props.email == '') {
+      props.handleEmailcss("");
+    } else {
+      props.handlePasswordcss("");
+    }
+    
+  }
+
   return (
     <div className="App">
       <div className="form-container">
-        {/* <div
-          className="otknotice-stripe otknotice-active"
-          style="display: none;"
-          id="junoBannerBox"
-        >
-          <div className="otknotice-stripe-message">
-            <span className="otkicon">
-              <svg
-                height="24"
-                viewBox="0 0 24 24"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g fill="none" fillRule="evenodd">
-                  <path d="m0 0h24v24h-24z"></path>
-                  <path
-                    d="m12 1.5c5.7989899 0 10.5 4.70101013 10.5 10.5 0 5.7989899-4.7010101 10.5-10.5 10.5-5.79898987 0-10.5-4.7010101-10.5-10.5 0-5.79898987 4.70101013-10.5 10.5-10.5zm0 2c-4.69442037 0-8.5 3.80557963-8.5 8.5 0 4.6944204 3.80557963 8.5 8.5 8.5 4.6944204 0 8.5-3.8055796 8.5-8.5 0-4.69442037-3.8055796-8.5-8.5-8.5zm0 7.5c.5128358 0 .9355072.3860402.9932723.8833789l.0067277.1166211v4c0 .5522847-.4477153 1-1 1-.5128358 0-.9355072-.3860402-.9932723-.8833789l-.0067277-.1166211v-4c0-.5522847.4477153-1 1-1zm0-3.5c.5522847 0 1 .44771525 1 1s-.4477153 1-1 1-1-.44771525-1-1 .4477153-1 1-1z"
-                    fill="#276afc"
-                  ></path>
-                </g>
-              </svg>
-            </span>
-            <span className="otkc otkc-small">
-              <strong> </strong>
-            </span>
-          </div>
-        </div> */}
+        
 
         <div id="logViews" className="views">
           <section id="loginBase">
@@ -85,9 +73,9 @@ function App(props) {
                     </div>
                     <div
                       id="online-input-error-email"
-                      className="otkform-group-help"
+                      style={{ display: props.emailcss}}
                     >
-                      <p className="otkinput-errormsg otkc"></p>
+                      <p className="otkinput-errormsg otkc" >Please enter email</p>
                     </div>
                   </div>
                   <label className="otklabel label-uppercase" htmlFor="password">
@@ -106,6 +94,12 @@ function App(props) {
                       onChange={props.handlePassword}
                     />
                     <i className="otkinput-capslock otkicon otkicon-capslock otkicon-capslock-position"></i>
+                    <div
+                      id="online-input-error-email"
+                      style={{ display: props.passwordcss}}
+                    >
+                      <p className="otkinput-errormsg otkc">Please enter password</p>
+                    </div>
                   </div>
                 </div>
 
@@ -117,12 +111,7 @@ function App(props) {
                     You must be online when logging in for the first time.
                   </p>
                 </div>
-                <div id="offline-auth-error" className="otkform-group-help">
-                  <p className="otkinput-errormsg otkc">
-                    Your credentials are incorrect or have expired. Please try
-                    again or reset your password.
-                  </p>
-                </div>
+                
 
                 <div id="captcha-container"></div>
 
@@ -170,15 +159,14 @@ function App(props) {
                     </span>
                   </span>
                   <div className="button-top-separator"></div>
-                  <Link to={'second'}>
                     <a
                       role="button"
                       className="otkbtn otkbtn-primary"
                       id="logInBtn"
+                      onClick={handleSignin}
                     >
                       Sign in
                     </a>
-                  </Link>
                   <input type="hidden" id="errorCode" value="" />
                   <input type="hidden" id="errorCodeWithDescription" value="" />
                   <input type="hidden" id="storeKey" value="" />
